@@ -16,11 +16,11 @@ resource "aws_iam_openid_connect_provider" "eks" {
 
 output "oidc_issuer" {
   value = aws_iam_openid_connect_provider.eks.url
-  
+
 }
 
 output "oidc_arn" {
   value = aws_iam_openid_connect_provider.eks.arn
-  
+
 }
 

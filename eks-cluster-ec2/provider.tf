@@ -11,10 +11,11 @@ terraform {
 
 provider "aws" {
   region = var.region
+  profile = "Dzeko"
   default_tags {
     tags = {
-      Name    = "k8s_tower_batch"
-      project = "eks_demo"
+      Name    = "k8s-demo-cluster"
+      project = "eks-demo"
     }
   }
 }

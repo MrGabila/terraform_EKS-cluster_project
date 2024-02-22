@@ -2,8 +2,8 @@
 # This control plane can be used to attach self-managed, 
 # and aws managed nodes as well as you can create Fargate profiles.
 
-resource "aws_security_group" "jjtech_cluster" {
-  name        = "jjtech-cluster-sg"
+resource "aws_security_group" "cluster-sg" {
+  name        = "eks-cluster-sg"
   description = "Cluster communication with worker nodes"
   vpc_id      = aws_vpc.main.id
 
@@ -31,10 +31,8 @@ resource "aws_security_group" "jjtech_cluster" {
 
 # First of all, let's create an IAM role for EKS. It will use it to make API calls to AWS services, 
 # for example, to create managed node pools.
-
-
 resource "aws_iam_role" "eks-cluster" {
-  name = "eks-cluster-${var.cluster_name}"
+  name = "${var.cluster_name}-Role-for-EKS"
 
   assume_role_policy = <<POLICY
 {
@@ -53,7 +51,6 @@ POLICY
 }
 
 # Then we need to attach AmazonEKSClusterPolicy to this role.
-
 resource "aws_iam_role_policy_attachment" "amazon-eks-cluster-policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.eks-cluster.name
@@ -74,7 +71,7 @@ resource "aws_eks_cluster" "cluster" {
   role_arn = aws_iam_role.eks-cluster.arn
 
   vpc_config {
-    security_group_ids      = [aws_security_group.jjtech_cluster.id]
+    security_group_ids      = [aws_security_group.cluster-sg.id]
     endpoint_private_access = false
     endpoint_public_access  = true
     public_access_cidrs     = ["0.0.0.0/0"]
