@@ -42,7 +42,7 @@ output "aws_load_balancer_controller_role_arn" {
 # If you decide to deploy to a different namespace, you also need to create an 
 # AWS Fargate profile for that namespace.
 
-# Create another fargate profile for all our applications that will run in the application namesoace
+# Create another fargate profile for all our applications that will run in the application namespace
 resource "aws_eks_fargate_profile" "alb-controller" {
   cluster_name           = aws_eks_cluster.cluster.name
   fargate_profile_name   = "aws-load-balancer-controller"
@@ -62,7 +62,6 @@ resource "aws_eks_fargate_profile" "alb-controller" {
 
 
 # we need to deploy controller to Kubernetes using Helm
-
 resource "helm_release" "aws-load-balancer-controller" {
   name = "aws-load-balancer-controller"
 
@@ -99,7 +98,7 @@ resource "helm_release" "aws-load-balancer-controller" {
   # EKS Fargate specific
   set {
     name  = "region"
-    value = "us-east-1"
+    value = var.region
   }
 
   set {
@@ -124,11 +123,13 @@ resource "kubernetes_service_account" "alb-controller" {
       # This annotation is only used when running on EKS which can
       # use IAM roles for service accounts.
       "eks.amazonaws.com/role-arn" = aws_iam_role.aws_load_balancer_controller.arn
+      "meta.helm.sh/release-name"            = "aws-load-balancer-controller"  # Set release-name annotation
+      "meta.helm.sh/release-namespace"       = "aws-load-balancer-controller"  # Set release-namespace annotation
     }
     labels = {
       "app.kubernetes.io/name"       = "aws-alb-ingress-controller"
       "app.kubernetes.io/component"  = "controller"
-      "app.kubernetes.io/managed-by" = "terraform"
+      "app.kubernetes.io/managed-by" = "Helm"
     }
   }
 }

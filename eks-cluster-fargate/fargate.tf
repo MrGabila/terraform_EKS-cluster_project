@@ -53,7 +53,7 @@ resource "aws_eks_fargate_profile" "kube-system" {
   }
 }
 
-# Create another fargate profile for all our applications that will run in the application namesoace
+# Create another fargate profile for all our applications that will run in the application namespace
 resource "aws_eks_fargate_profile" "application" {
   cluster_name           = aws_eks_cluster.cluster.name
   fargate_profile_name   = "application"

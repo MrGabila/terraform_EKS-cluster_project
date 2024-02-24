@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  default = "jjtech-demo-cluster"
+  default = "demo-cluster"
 }
 
 variable "cluster_version" {

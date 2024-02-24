@@ -2,9 +2,8 @@
 # This control plane can be used to attach self-managed, 
 # and aws managed nodes as well as you can create Fargate profiles.
 
-# First of all, let's create an IAM role for EKS. It will use it to make API calls to AWS services, 
+# Create an IAM role for EKS. It will use it to make API calls to AWS services, 
 # for example, to create managed node pools.
-
 
 resource "aws_iam_role" "eks-cluster" {
   name = "eks-cluster-${var.cluster_name}"

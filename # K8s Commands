@@ -1,20 +1,19 @@
 # K8s Commands
 
-###################################################3
+###################################################
 General commands
 ##########################
-
-k get po -n application --show-labels # show lables for pods
-
-k get po -o wide # to get list of nodes on which pods are deployed
-
-aws eks update-kubeconfig --name jjtech-demo-cluster --region us-east-1
+aws eks update-kubeconfig --name demo-cluster --region us-east-1 --profile Dzeko
 
 alias k=kubectl
 alias kgp="kubectl get po" 
 alias kgn="kubectl get nodes"
 
-kubectl create ns tower
+k get po -n application --show-labels # show lables for pods
+
+k get po -o wide # to get list of nodes on which pods are deployed
+
+kubectl create ns tower  # Creat a namespace called tower
 
 kubectl api-resources  # To get all api resources i.e their NAME, SHORTNAMES, APIVERSION, NAMESPACED, KIND
 
