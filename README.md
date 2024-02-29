@@ -10,6 +10,7 @@ Provision an Elastic Kubernetes Service (EKS) cluster using these terraform scri
 * Kubectl installed. Follow this url for installation guide **https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html**
 
 #### Note for Fargate launch
+* Can only launch resources in the namespaces selected by the Fargate profile; 'aws-load-balancer-controller' and 'application'
 * This cluster based on the current configuration will be created in the us-east-1 region and is setup to work only with fargate
 * Rerun terraform apply again if you receive **Error: creating EC2 VPC: RequestError: send request failed
 │ caused by: Post "https://ec2.us-east-1.amazonaws.com/": read tcp 192.168.1.71:53727->209.54.181.193:443: wsarecv: An existing connection was forcibly closed by the remote host.** and it should deploy the resources
@@ -22,9 +23,9 @@ Provision an Elastic Kubernetes Service (EKS) cluster using these terraform scri
 * Fargate profiles for application, aws-load-balancer-controller and Kube-system namespaces
 
 ### Deployment Steps
+run from within the directory, ec2 or fargate
 ```bash
 terraform init
-terraform fmt
 terraform validate
 terraform plan
 terraform apply --auto-appprove

@@ -58,6 +58,9 @@ resource "aws_eks_fargate_profile" "alb-controller" {
   selector {
     namespace = "aws-load-balancer-controller"
   }
+  selector {
+    namespace = "application"
+  }
 }
 
 
@@ -129,7 +132,7 @@ resource "kubernetes_service_account" "alb-controller" {
     labels = {
       "app.kubernetes.io/name"       = "aws-alb-ingress-controller"
       "app.kubernetes.io/component"  = "controller"
-      "app.kubernetes.io/managed-by" = "Helm"
+      "app.kubernetes.io/managed-by" = "Helm" #changed
     }
   }
 }
