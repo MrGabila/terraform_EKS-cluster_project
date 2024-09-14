@@ -88,7 +88,8 @@ resource "aws_subnet" "public-us-east-1b" {
 
 
 resource "aws_eip" "nat" {
-  vpc = true
+  depends_on = [aws_internet_gateway.igw]
+  domain = "vpc"
 
   tags = {
     Name = "nat"

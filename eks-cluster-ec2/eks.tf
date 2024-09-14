@@ -29,7 +29,7 @@ resource "aws_security_group" "cluster-sg" {
 }
 
 
-# First of all, let's create an IAM role for EKS. It will use it to make API calls to AWS services, 
+# Create an IAM role for EKS. It will use it to make API calls to AWS services, 
 # for example, to create managed node pools.
 resource "aws_iam_role" "eks-cluster" {
   name = "${var.cluster_name}-Role-for-EKS"
